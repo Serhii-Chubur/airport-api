@@ -103,11 +103,16 @@ class FlightViewSet(viewsets.ModelViewSet):
 
 
 class TicketViewSet(viewsets.ModelViewSet):
+    queryset = Ticket.objects.all()
+
     def get_serializer_class(self):
         if self.action == "retrieve":
             return TicketRetrieveSerializer
         return TicketListSerializer
 
-    queryset = Ticket.objects.all().select_related(
-        "flight__route__source", "flight__route__destination"
-    )
+    def get_queryset(self):
+        if self.action == "retrieve":
+            return self.queryset.select_related(
+                "flight__route__source", "flight__route__destination"
+            )
+        return self.queryset
