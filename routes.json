@@ -1,0 +1,128 @@
+[
+    {
+        "model": "airport.route",
+        "pk": 1,
+        "fields": {
+            "source": 1,
+            "destination": 2,
+            "distance": 770
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 2,
+        "fields": {
+            "source": 3,
+            "destination": 4,
+            "distance": 800
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 3,
+        "fields": {
+            "source": 5,
+            "destination": 6,
+            "distance": 2700
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 4,
+        "fields": {
+            "source": 7,
+            "destination": 8,
+            "distance": 1350
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 5,
+        "fields": {
+            "source": 9,
+            "destination": 10,
+            "distance": 560
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 6,
+        "fields": {
+            "source": 11,
+            "destination": 12,
+            "distance": 1100
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 7,
+        "fields": {
+            "source": 13,
+            "destination": 14,
+            "distance": 3700
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 8,
+        "fields": {
+            "source": 15,
+            "destination": 16,
+            "distance": 140
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 9,
+        "fields": {
+            "source": 17,
+            "destination": 18,
+            "distance": 320
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 10,
+        "fields": {
+            "source": 19,
+            "destination": 20,
+            "distance": 1200
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 11,
+        "fields": {
+            "source": 21,
+            "destination": 22,
+            "distance": 450
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 12,
+        "fields": {
+            "source": 23,
+            "destination": 24,
+            "distance": 600
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 13,
+        "fields": {
+            "source": 25,
+            "destination": 26,
+            "distance": 800
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": 14,
+        "fields": {
+            "source": 27,
+            "destination": 28,
+            "distance": 900
+        }
+    }
+]

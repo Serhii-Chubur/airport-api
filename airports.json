@@ -1,0 +1,802 @@
+[
+  {
+    "model": "airport.airport",
+    "pk": 1,
+    "fields": {
+      "name": "Hartsfield-Jackson Atlanta International Airport",
+      "closest_big_city": "Atlanta"
+    }
+  },
+  {
+  "model": "airport.airport",
+  "pk": 2,
+  "fields": {
+    "name": "Lisbon Humberto Delgado Airport",
+    "closest_big_city": "Lisbon"
+  }
+},
+  {
+    "model": "airport.airport",
+    "pk": 3,
+    "fields": {
+      "name": "Chicago O'Hare International Airport",
+      "closest_big_city": "Chicago"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 4,
+    "fields": {
+      "name": "Dallas/Fort Worth International Airport",
+      "closest_big_city": "Dallas"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 5,
+    "fields": {
+      "name": "Denver International Airport",
+      "closest_big_city": "Denver"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 6,
+    "fields": {
+      "name": "John F. Kennedy International Airport",
+      "closest_big_city": "New York"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 7,
+    "fields": {
+      "name": "San Francisco International Airport",
+      "closest_big_city": "San Francisco"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 8,
+    "fields": {
+      "name": "Seattle-Tacoma International Airport",
+      "closest_big_city": "Seattle"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 9,
+    "fields": {
+      "name": "McCarran International Airport",
+      "closest_big_city": "Las Vegas"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 10,
+    "fields": {
+      "name": "Orlando International Airport",
+      "closest_big_city": "Orlando"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 11,
+    "fields": {
+      "name": "Miami International Airport",
+      "closest_big_city": "Miami"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 12,
+    "fields": {
+      "name": "Philadelphia International Airport",
+      "closest_big_city": "Philadelphia"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 13,
+    "fields": {
+      "name": "Phoenix Sky Harbor International Airport",
+      "closest_big_city": "Phoenix"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 14,
+    "fields": {
+      "name": "Houston George Bush Intercontinental Airport",
+      "closest_big_city": "Houston"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 15,
+    "fields": {
+      "name": "Charlotte Douglas International Airport",
+      "closest_big_city": "Charlotte"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 16,
+    "fields": {
+      "name": "Detroit Metropolitan Wayne County Airport",
+      "closest_big_city": "Detroit"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 17,
+    "fields": {
+      "name": "Minneapolis-Saint Paul International Airport",
+      "closest_big_city": "Minneapolis"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 18,
+    "fields": {
+      "name": "Baltimore/Washington International Thurgood Marshall Airport",
+      "closest_big_city": "Baltimore"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 19,
+    "fields": {
+      "name": "San Diego International Airport",
+      "closest_big_city": "San Diego"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 20,
+    "fields": {
+      "name": "Tampa International Airport",
+      "closest_big_city": "Tampa"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 21,
+    "fields": {
+      "name": "St. Louis Lambert International Airport",
+      "closest_big_city": "St. Louis"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 22,
+    "fields": {
+      "name": "John Glenn Columbus International Airport",
+      "closest_big_city": "Columbus"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 23,
+    "fields": {
+      "name": "Portland International Airport",
+      "closest_big_city": "Portland"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 24,
+    "fields": {
+      "name": "Sacramento International Airport",
+      "closest_big_city": "Sacramento"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 25,
+    "fields": {
+      "name": "Charles de Gaulle Airport",
+      "closest_big_city": "Paris"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 26,
+    "fields": {
+      "name": "Frankfurt Airport",
+      "closest_big_city": "Frankfurt"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 27,
+    "fields": {
+      "name": "Boryspil International Airport",
+      "closest_big_city": "Kyiv"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 28,
+    "fields": {
+      "name": "Munich Airport",
+      "closest_big_city": "Munich"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 29,
+    "fields": {
+      "name": "Berlin Brandenburg Airport",
+      "closest_big_city": "Berlin"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 30,
+    "fields": {
+      "name": "Lyon-Saint Exupéry Airport",
+      "closest_big_city": "Lyon"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 31,
+    "fields": {
+      "name": "Nice Côte d'Azur Airport",
+      "closest_big_city": "Nice"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 32,
+    "fields": {
+      "name": "Hamburg Airport",
+      "closest_big_city": "Hamburg"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 33,
+    "fields": {
+      "name": "Düsseldorf Airport",
+      "closest_big_city": "Düsseldorf"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 34,
+    "fields": {
+      "name": "Stuttgart Airport",
+      "closest_big_city": "Stuttgart"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 35,
+    "fields": {
+      "name": "Kiev Boryspil International Airport",
+      "closest_big_city": "Kyiv"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 36,
+    "fields": {
+      "name": "Lviv Danylo Halytskyi International Airport",
+      "closest_big_city": "Lviv"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 37,
+    "fields": {
+      "name": "Odesa International Airport",
+      "closest_big_city": "Odesa"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 38,
+    "fields": {
+      "name": "Kharkiv International Airport",
+      "closest_big_city": "Kharkiv"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 39,
+    "fields": {
+      "name": "Zaporizhzhia International Airport",
+      "closest_big_city": "Zaporizhzhia"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 40,
+    "fields": {
+      "name": "Bordeaux-Mérignac Airport",
+      "closest_big_city": "Bordeaux"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 41,
+    "fields": {
+      "name": "Marseille Provence Airport",
+      "closest_big_city": "Marseille"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 42,
+    "fields": {
+      "name": "Toulouse-Blagnac Airport",
+      "closest_big_city": "Toulouse"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 43,
+    "fields": {
+      "name": "Nantes Atlantique Airport",
+      "closest_big_city": "Nantes"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 44,
+    "fields": {
+      "name": "Catania-Fontanarossa Airport",
+      "closest_big_city": "Catania"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 45,
+    "fields": {
+      "name": "Rome Fiumicino Airport",
+      "closest_big_city": "Rome"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 46,
+    "fields": {
+      "name": "Venice Marco Polo Airport",
+      "closest_big_city": "Venice"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 47,
+    "fields": {
+      "name": "Florence Airport",
+      "closest_big_city": "Florence"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 48,
+    "fields": {
+      "name": "Palermo Airport",
+      "closest_big_city": "Palermo"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 49,
+    "fields": {
+      "name": "Seattle-Tacoma International Airport",
+      "closest_big_city": "Seattle"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 50,
+    "fields": {
+      "name": "Madrid-Barajas Adolfo Suárez Airport",
+      "closest_big_city": "Madrid"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 51,
+    "fields": {
+      "name": "Barcelona-El Prat Airport",
+      "closest_big_city": "Barcelona"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 52,
+    "fields": {
+      "name": "Zurich Airport",
+      "closest_big_city": "Zurich"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 53,
+    "fields": {
+      "name": "Geneva Airport",
+      "closest_big_city": "Geneva"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 54,
+    "fields": {
+      "name": "Vienna International Airport",
+      "closest_big_city": "Vienna"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 55,
+    "fields": {
+      "name": "Brussels Airport",
+      "closest_big_city": "Brussels"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 56,
+    "fields": {
+      "name": "Amsterdam Airport Schiphol",
+      "closest_big_city": "Amsterdam"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 57,
+    "fields": {
+      "name": "Copenhagen Airport",
+      "closest_big_city": "Copenhagen"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 58,
+    "fields": {
+      "name": "Oslo Gardermoen Airport",
+      "closest_big_city": "Oslo"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 59,
+    "fields": {
+      "name": "Stockholm Arlanda Airport",
+      "closest_big_city": "Stockholm"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 60,
+    "fields": {
+      "name": "Helsinki-Vantaa Airport",
+      "closest_big_city": "Helsinki"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 61,
+    "fields": {
+      "name": "Dublin Airport",
+      "closest_big_city": "Dublin"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 62,
+    "fields": {
+      "name": "Edinburgh Airport",
+      "closest_big_city": "Edinburgh"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 63,
+    "fields": {
+      "name": "Birmingham Airport",
+      "closest_big_city": "Birmingham"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 64,
+    "fields": {
+      "name": "Manchester Airport",
+      "closest_big_city": "Manchester"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 65,
+    "fields": {
+      "name": "Glasgow International Airport",
+      "closest_big_city": "Glasgow"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 66,
+    "fields": {
+      "name": "Belfast International Airport",
+      "closest_big_city": "Belfast"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 67,
+    "fields": {
+      "name": "Malta International Airport",
+      "closest_big_city": "Valletta"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 68,
+    "fields": {
+      "name": "Athens International Airport",
+      "closest_big_city": "Athens"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 69,
+    "fields": {
+      "name": "Istanbul Airport",
+      "closest_big_city": "Istanbul"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 70,
+    "fields": {
+      "name": "Dubai International Airport",
+      "closest_big_city": "Dubai"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 71,
+    "fields": {
+      "name": "Abu Dhabi International Airport",
+      "closest_big_city": "Abu Dhabi"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 72,
+    "fields": {
+      "name": "Doha Hamad International Airport",
+      "closest_big_city": "Doha"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 73,
+    "fields": {
+      "name": "King Abdulaziz International Airport",
+      "closest_big_city": "Jeddah"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 74,
+    "fields": {
+      "name": "Cairo International Airport",
+      "closest_big_city": "Cairo"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 75,
+    "fields": {
+      "name": "Nairobi Jomo Kenyatta International Airport",
+      "closest_big_city": "Nairobi"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 76,
+    "fields": {
+      "name": "Johannesburg O.R. Tambo International Airport",
+      "closest_big_city": "Johannesburg"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 77,
+    "fields": {
+      "name": "Lagos Murtala Muhammed International Airport",
+      "closest_big_city": "Lagos"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 78,
+    "fields": {
+      "name": "Accra Kotoka International Airport",
+      "closest_big_city": "Accra"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 79,
+    "fields": {
+      "name": "Sao Paulo/Guarulhos–Governador André Franco Montoro International Airport",
+      "closest_big_city": "Sao Paulo"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 80,
+    "fields": {
+      "name": "Buenos Aires Ministro Pistarini International Airport",
+      "closest_big_city": "Buenos Aires"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 81,
+    "fields": {
+      "name": "Pittsburgh International Airport",
+      "closest_big_city": "Pittsburgh"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 82,
+    "fields": {
+      "name": "Singapore Changi Airport",
+      "closest_big_city": "Singapore"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 83,
+    "fields": {
+      "name": "Hong Kong International Airport",
+      "closest_big_city": "Hong Kong"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 84,
+    "fields": {
+      "name": "Shanghai Pudong International Airport",
+      "closest_big_city": "Shanghai"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 85,
+    "fields": {
+      "name": "Beijing Capital International Airport",
+      "closest_big_city": "Beijing"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 86,
+    "fields": {
+      "name": "Kuala Lumpur International Airport",
+      "closest_big_city": "Kuala Lumpur"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 87,
+    "fields": {
+      "name": "Bangkok Suvarnabhumi Airport",
+      "closest_big_city": "Bangkok"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 88,
+    "fields": {
+      "name": "Mumbai Chhatrapati Shivaji Maharaj International Airport",
+      "closest_big_city": "Mumbai"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 89,
+    "fields": {
+      "name": "Delhi Indira Gandhi International Airport",
+      "closest_big_city": "Delhi"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 90,
+    "fields": {
+      "name": "Mexico City International Airport",
+      "closest_big_city": "Mexico City"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 91,
+    "fields": {
+      "name": "Los Angeles International Airport",
+      "closest_big_city": "Los Angeles"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 92,
+    "fields": {
+      "name": "Cincinnati/Northern Kentucky International Airport",
+      "closest_big_city": "Cincinnati"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 93,
+    "fields": {
+      "name": "Narita International Airport",
+      "closest_big_city": "Tokyo"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 94,
+    "fields": {
+      "name": "Doha Hamad International Airport",
+      "closest_big_city": "Doha"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 95,
+    "fields": {
+      "name": "Casablanca Mohammed V International Airport",
+      "closest_big_city": "Casablanca"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 96,
+    "fields": {
+      "name": "Riyadh King Khalid International Airport",
+      "closest_big_city": "Riyadh"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 97,
+    "fields": {
+      "name": "Lima Jorge Chávez International Airport",
+      "closest_big_city": "Lima"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 98,
+    "fields": {
+      "name": "Dhaka Hazrat Shahjalal International Airport",
+      "closest_big_city": "Dhaka"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 99,
+    "fields": {
+      "name": "Tel Aviv Ben Gurion Airport",
+      "closest_big_city": "Tel Aviv"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 100,
+    "fields": {
+      "name": "Abidjan Félix Houphouët-Boigny International Airport",
+      "closest_big_city": "Abidjan"
+    }
+  }
+]

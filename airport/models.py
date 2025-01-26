@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from rest_framework.exceptions import ValidationError
 
-
+# 8 models
 # Create your models here.
 class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -41,10 +41,10 @@ class Airport(models.Model):
 
 class Route(models.Model):
     source = models.ForeignKey(
-        Airport, on_delete=models.CASCADE, related_name="routes"
+        Airport, on_delete=models.CASCADE, related_name="source_airport"
     )
     destination = models.ForeignKey(
-        Airport, on_delete=models.CASCADE, related_name="routes"
+        Airport, on_delete=models.CASCADE, related_name="destination_airport"
     )
     distance = models.IntegerField()
 
@@ -61,7 +61,7 @@ class Airplane(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return f"{self.airplane_type} {self.name}"
 
 
 class Flight(models.Model):
@@ -75,7 +75,7 @@ class Flight(models.Model):
     arrival_time = models.DateTimeField()
 
     def __str__(self):
-        return (f"{self.airplane}, {self.route}, "
+        return (f"{self.route}, "
                 f"departure: {self.departure_time}, "
                 f"arrival: {self.arrival_time}")
 
@@ -94,14 +94,16 @@ class Ticket(models.Model):
         unique_together = ("flight", "row", "seat")
 
     @staticmethod
-    def validate_ticket(seat: int, num_seats: int, error):
-        if not 1 <= seat <= num_seats:
+    def validate_ticket(seat: int, row: int, num_seats: int, num_rows:int, error):
+        if not 1 <= seat <= num_seats or not 1 <= row <= num_rows:
             raise error
 
     def clean(self):
         Ticket.validate_ticket(
             self.seat,
+            self.row,
             self.flight.airplane.seats_in_row,
+            self.flight.airplane.rows,
             ValidationError("Invalid seat number")
         )
 
