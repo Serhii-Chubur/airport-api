@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from rest_framework.exceptions import ValidationError
 
+
 # 8 models
 # Create your models here.
 class Order(models.Model):
@@ -49,7 +50,7 @@ class Route(models.Model):
     distance = models.IntegerField()
 
     def __str__(self):
-        return f"{self.source} - {self.destination}, {self.distance} km"
+        return f"{self.source} - {self.destination}"
 
 
 class Airplane(models.Model):
@@ -70,6 +71,9 @@ class Flight(models.Model):
     )
     airplane = models.ForeignKey(
         Airplane, on_delete=models.CASCADE, related_name="flights"
+    )
+    crew = models.ForeignKey(
+        Crew, on_delete=models.CASCADE, related_name="flights"
     )
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
@@ -94,7 +98,9 @@ class Ticket(models.Model):
         unique_together = ("flight", "row", "seat")
 
     @staticmethod
-    def validate_ticket(seat: int, row: int, num_seats: int, num_rows:int, error):
+    def validate_ticket(
+            seat: int, row: int, num_seats: int, num_rows: int, error
+    ):
         if not 1 <= seat <= num_seats or not 1 <= row <= num_rows:
             raise error
 

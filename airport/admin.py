@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from airport.models import Ticket, Order, Airplane, AirplaneType, Crew, Airport, Route, Flight
+from airport.models import (Ticket,
+                            Order,
+                            Airplane,
+                            AirplaneType,
+                            Crew,
+                            Airport,
+                            Route,
+                            Flight)
 
 
 # Register your models here.
@@ -15,6 +22,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     class Meta:
         model = Order
+
 
 admin.site.register(AirplaneType)
 admin.site.register(Crew)
