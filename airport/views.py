@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
 
 from airport.models import (AirplaneType,
                             Order,
@@ -69,9 +70,16 @@ class CrewViewSet(viewsets.ModelViewSet):
         return self.queryset
 
 
+class AirportSetPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = "page_size"
+    max_page_size = 10
+
+
 class AirportViewSet(viewsets.ModelViewSet):
     serializer_class = AirportSerializer
     queryset = Airport.objects.all()
+    pagination_class = AirportSetPagination
 
 
 class RouteViewSet(viewsets.ModelViewSet):
@@ -80,11 +88,12 @@ class RouteViewSet(viewsets.ModelViewSet):
             return RouteRetrieveSerializer
         return RouteSerializer
 
-    queryset = Route.objects.all()
+    queryset = Route.objects.all().select_related("source", "destination", )
 
     def get_queryset(self):
         if self.action == "list":
-            return self.queryset.prefetch_related("source", "destination")
+            return self.queryset.prefetch_related(
+                "destination", "source")
         return self.queryset
 
 
@@ -94,7 +103,16 @@ class AirplaneViewSet(viewsets.ModelViewSet):
             return AirplaneRetrieveSerializer
         return AirplaneSerializer
 
-    queryset = Airplane.objects.all().select_related("airplane_type")
+    queryset = Airplane.objects.all()
+
+    def get_queryset(self):
+        if self.action == "list":
+            return self.queryset.prefetch_related("airplane_type")
+        if self.action == "retrieve":
+            return self.queryset.prefetch_related(
+                "flights__route__destination",
+                "flights__route__source").select_related("airplane_type")
+        return self.queryset
 
 
 class FlightViewSet(viewsets.ModelViewSet):
@@ -104,5 +122,10 @@ class FlightViewSet(viewsets.ModelViewSet):
         return FlightSerializer
 
     queryset = Flight.objects.all().select_related(
-        "route__source", "route__destination"
+        "route__destination", "route__source", "airplane"
     )
+
+    def get_queryset(self):
+        if self.action == "list":
+            return self.queryset
+        return self.queryset.select_related("airplane__airplane_type")

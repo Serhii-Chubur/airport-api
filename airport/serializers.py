@@ -134,13 +134,21 @@ class FlightSerializer(serializers.ModelSerializer):
         source="route.__str__", read_only=True
     )
     route = serializers.ChoiceField(
-        choices=Route.objects.all(), write_only=True
+        choices=Route.objects.all().select_related(
+            "source", "destination"
+        ),
+        write_only=True
     )
     crew = serializers.MultipleChoiceField(
-        choices=Crew.objects.all(), write_only=True
+        choices=Crew.objects.all().prefetch_related("flights"), write_only=True
     )
     airplane = serializers.ChoiceField(
-        choices=Airplane.objects.all(), write_only=True
+        choices=Airplane.objects.all().select_related(
+            "airplane_type"
+        ).prefetch_related(
+            "flights__crew__flights"
+        ),
+        write_only=True
     )
     departure_time = serializers.DateTimeField(write_only=True)
     arrival_time = serializers.DateTimeField(write_only=True)
