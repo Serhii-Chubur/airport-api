@@ -2,7 +2,6 @@ from rest_framework import viewsets
 
 from airport.models import (AirplaneType,
                             Order,
-                            Ticket,
                             Flight,
                             Airplane,
                             Route,
@@ -11,18 +10,16 @@ from airport.models import (AirplaneType,
 from airport.serializers import (AirplaneTypeSerializer,
                                  OrderListSerializer,
                                  OrderRetrieveSerializer,
-                                 CrewSerializer,
+                                 CrewListSerializer,
                                  AirportSerializer,
                                  RouteSerializer,
                                  AirplaneSerializer,
                                  FlightSerializer,
-                                 TicketListSerializer,
                                  AirplaneTypeRetrieveSerializer,
                                  CrewRetrieveSerializer,
                                  RouteRetrieveSerializer,
                                  AirplaneRetrieveSerializer,
-                                 FlightRetrieveSerializer,
-                                 TicketRetrieveSerializer)
+                                 FlightRetrieveSerializer, )
 
 
 # Create your views here.
@@ -60,7 +57,16 @@ class CrewViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "retrieve":
             return CrewRetrieveSerializer
-        return CrewSerializer
+        return CrewListSerializer
+
+    def get_queryset(self):
+        if self.action == "retrieve":
+            return self.queryset.prefetch_related(
+                "flights__airplane__airplane_type",
+                "flights__route__destination",
+                "flights__route__source"
+            )
+        return self.queryset
 
 
 class AirportViewSet(viewsets.ModelViewSet):
@@ -100,19 +106,3 @@ class FlightViewSet(viewsets.ModelViewSet):
     queryset = Flight.objects.all().select_related(
         "route__source", "route__destination"
     )
-
-
-class TicketViewSet(viewsets.ModelViewSet):
-    queryset = Ticket.objects.all()
-
-    def get_serializer_class(self):
-        if self.action == "retrieve":
-            return TicketRetrieveSerializer
-        return TicketListSerializer
-
-    def get_queryset(self):
-        if self.action == "retrieve":
-            return self.queryset.select_related(
-                "flight__route__source", "flight__route__destination"
-            )
-        return self.queryset
