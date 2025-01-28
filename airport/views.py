@@ -40,19 +40,25 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = ()
 
     def get_serializer_class(self):
+
         if self.action == "retrieve":
             return OrderRetrieveSerializer
+
         return OrderListSerializer
 
     def get_queryset(self):
+
         if self.action == "list":
             return self.queryset.filter(
                 user=self.request.user
             ).prefetch_related("tickets")
+
         if self.action == "retrieve":
             return self.queryset.filter(
                 user=self.request.user
             ).prefetch_related("tickets__flight__route")
+
+        return self.queryset
 
 
 class AirplaneTypeViewSet(viewsets.ModelViewSet):
@@ -62,6 +68,7 @@ class AirplaneTypeViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "retrieve":
             return AirplaneTypeRetrieveSerializer
+
         return AirplaneTypeSerializer
 
 
@@ -70,17 +77,21 @@ class CrewViewSet(viewsets.ModelViewSet):
     pagination_class = ViewsSetPagination
 
     def get_serializer_class(self):
+
         if self.action == "retrieve":
             return CrewRetrieveSerializer
+
         return CrewListSerializer
 
     def get_queryset(self):
+
         if self.action == "retrieve":
             return self.queryset.prefetch_related(
                 "flights__airplane__airplane_type",
                 "flights__route__destination",
                 "flights__route__source"
             )
+
         return self.queryset
 
 
@@ -90,19 +101,39 @@ class AirportViewSet(viewsets.ModelViewSet):
     pagination_class = ViewsSetPagination
 
 
+def str_to_int(id_string):
+    return [int(num) for num in id_string.split(",")]
+
+
 class RouteViewSet(viewsets.ModelViewSet):
     queryset = Route.objects.all().select_related("source", "destination", )
     pagination_class = ViewsSetPagination
 
     def get_serializer_class(self):
+
         if self.action == "retrieve":
             return RouteRetrieveSerializer
+
         return RouteSerializer
 
     def get_queryset(self):
+        source = self.request.GET.get("source")
+        destination = self.request.GET.get("destination")
+
+        if source:
+            self.queryset = self.queryset.filter(
+                source_id__in=str_to_int(source)
+            )
+
+        if destination:
+            self.queryset = self.queryset.filter(
+                destination_id__in=str_to_int(destination)
+            )
+
         if self.action == "list":
             return self.queryset.prefetch_related(
                 "destination", "source")
+
         return self.queryset
 
 
@@ -111,19 +142,31 @@ class AirplaneViewSet(viewsets.ModelViewSet):
     pagination_class = ViewsSetPagination
 
     def get_serializer_class(self):
+
         if self.action == "retrieve":
             return AirplaneRetrieveSerializer
+
         if self.action == "upload_image":
             return AirplaneImageSerializer
+
         return AirplaneSerializer
 
     def get_queryset(self):
+        airplane_type = self.request.GET.get("type")
+
+        if airplane_type:
+            self.queryset = self.queryset.filter(
+                airplane_type_id__in=str_to_int(airplane_type)
+            )
+
         if self.action == "list":
             return self.queryset.prefetch_related("airplane_type")
+
         if self.action == "retrieve":
             return self.queryset.prefetch_related(
                 "flights__route__destination",
                 "flights__route__source").select_related("airplane_type")
+
         return self.queryset
 
     @action(
@@ -134,6 +177,7 @@ class AirplaneViewSet(viewsets.ModelViewSet):
     def upload_image(self, request, *args, **kwargs):
         airplane = self.get_object()
         serializer = self.get_serializer(airplane, data=request.data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(
@@ -156,6 +200,26 @@ class FlightViewSet(viewsets.ModelViewSet):
         return FlightSerializer
 
     def get_queryset(self):
+        route = self.request.GET.get("route")
+        airplane = self.request.GET.get("airplane")
+        crew = self.request.GET.get("crew")
+
+        if route:
+            self.queryset = self.queryset.filter(
+                route_id__in=str_to_int(route)
+            )
+
+        if airplane:
+            self.queryset = self.queryset.filter(
+                airplane_id__in=str_to_int(airplane)
+            )
+
+        if crew:
+            self.queryset = self.queryset.filter(
+                crew__in=str_to_int(crew)
+            )
+
         if self.action == "list":
             return self.queryset
+
         return self.queryset.select_related("airplane__airplane_type")
