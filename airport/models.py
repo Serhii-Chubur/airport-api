@@ -1,5 +1,9 @@
+import pathlib
+import uuid
+
 from django.conf import settings
 from django.db import models
+from django.utils.text import slugify
 from rest_framework.exceptions import ValidationError
 
 
@@ -53,6 +57,15 @@ class Route(models.Model):
         return f"{self.source} - {self.destination}"
 
 
+def image_upload(instance: "Airplane", filename: str) -> pathlib.Path:
+    filename = (
+            f"{slugify(instance.__str__())}"
+            f"_{uuid.uuid4()}"
+            + pathlib.Path(filename).suffix
+    )
+    return pathlib.Path("upload/airplanes") / pathlib.Path(filename)
+
+
 class Airplane(models.Model):
     name = models.CharField(max_length=255)
     rows = models.IntegerField()
@@ -60,6 +73,7 @@ class Airplane(models.Model):
     airplane_type = models.ForeignKey(
         AirplaneType, on_delete=models.CASCADE, related_name="airplanes"
     )
+    image = models.ImageField(upload_to=image_upload, blank=True, null=True)
 
     def __str__(self):
         return f"{self.airplane_type} {self.name}"

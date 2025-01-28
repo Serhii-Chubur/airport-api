@@ -1,5 +1,8 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
 
 from airport.models import (AirplaneType,
                             Order,
@@ -20,12 +23,21 @@ from airport.serializers import (AirplaneTypeSerializer,
                                  CrewRetrieveSerializer,
                                  RouteRetrieveSerializer,
                                  AirplaneRetrieveSerializer,
-                                 FlightRetrieveSerializer, )
+                                 FlightRetrieveSerializer,
+                                 AirplaneImageSerializer, )
 
 
 # Create your views here.
+class ViewsSetPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = "page_size"
+    max_page_size = 10
+
+
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
+    pagination_class = ViewsSetPagination
+    permission_classes = ()
 
     def get_serializer_class(self):
         if self.action == "retrieve":
@@ -45,6 +57,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 class AirplaneTypeViewSet(viewsets.ModelViewSet):
     queryset = AirplaneType.objects.all()
+    pagination_class = ViewsSetPagination
 
     def get_serializer_class(self):
         if self.action == "retrieve":
@@ -54,6 +67,7 @@ class AirplaneTypeViewSet(viewsets.ModelViewSet):
 
 class CrewViewSet(viewsets.ModelViewSet):
     queryset = Crew.objects.all()
+    pagination_class = ViewsSetPagination
 
     def get_serializer_class(self):
         if self.action == "retrieve":
@@ -70,25 +84,20 @@ class CrewViewSet(viewsets.ModelViewSet):
         return self.queryset
 
 
-class AirportSetPagination(PageNumberPagination):
-    page_size = 5
-    page_size_query_param = "page_size"
-    max_page_size = 10
-
-
 class AirportViewSet(viewsets.ModelViewSet):
     serializer_class = AirportSerializer
     queryset = Airport.objects.all()
-    pagination_class = AirportSetPagination
+    pagination_class = ViewsSetPagination
 
 
 class RouteViewSet(viewsets.ModelViewSet):
+    queryset = Route.objects.all().select_related("source", "destination", )
+    pagination_class = ViewsSetPagination
+
     def get_serializer_class(self):
         if self.action == "retrieve":
             return RouteRetrieveSerializer
         return RouteSerializer
-
-    queryset = Route.objects.all().select_related("source", "destination", )
 
     def get_queryset(self):
         if self.action == "list":
@@ -98,12 +107,15 @@ class RouteViewSet(viewsets.ModelViewSet):
 
 
 class AirplaneViewSet(viewsets.ModelViewSet):
+    queryset = Airplane.objects.all()
+    pagination_class = ViewsSetPagination
+
     def get_serializer_class(self):
         if self.action == "retrieve":
             return AirplaneRetrieveSerializer
+        if self.action == "upload_image":
+            return AirplaneImageSerializer
         return AirplaneSerializer
-
-    queryset = Airplane.objects.all()
 
     def get_queryset(self):
         if self.action == "list":
@@ -114,16 +126,34 @@ class AirplaneViewSet(viewsets.ModelViewSet):
                 "flights__route__source").select_related("airplane_type")
         return self.queryset
 
+    @action(
+        methods=["POST", "GET"],
+        detail=True,
+        url_path="upload-image",
+        permission_classes=(IsAdminUser,))
+    def upload_image(self, request, *args, **kwargs):
+        airplane = self.get_object()
+        serializer = self.get_serializer(airplane, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data, status=status.HTTP_200_OK
+            )
+        return Response(
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )
+
 
 class FlightViewSet(viewsets.ModelViewSet):
+    queryset = Flight.objects.all().select_related(
+        "route__destination", "route__source", "airplane"
+    )
+    pagination_class = ViewsSetPagination
+
     def get_serializer_class(self):
         if self.action == "retrieve":
             return FlightRetrieveSerializer
         return FlightSerializer
-
-    queryset = Flight.objects.all().select_related(
-        "route__destination", "route__source", "airplane"
-    )
 
     def get_queryset(self):
         if self.action == "list":

@@ -24,7 +24,9 @@ class AirplaneTypeRetrieveSerializer(AirplaneTypeSerializer):
 
 
 class CrewListSerializer(serializers.ModelSerializer):
-    full_name = serializers.StringRelatedField(source="__str__")
+    full_name = serializers.StringRelatedField(
+        source="__str__", read_only=True
+    )
     first_name = serializers.CharField(required=True, write_only=True)
     last_name = serializers.CharField(required=True, write_only=True)
 
@@ -111,14 +113,20 @@ class RouteRetrieveSerializer(serializers.ModelSerializer):
 
 
 class AirplaneSerializer(serializers.ModelSerializer):
-    name = serializers.StringRelatedField(source="__str__")
+    model = serializers.StringRelatedField(source="__str__")
     airplane_type = serializers.ChoiceField(
         choices=AirplaneType.objects.all(), write_only=True
     )
+    name = serializers.CharField(write_only=True)
 
     class Meta:
         model = Airplane
-        fields = ("id", "name", "rows", "seats_in_row", "airplane_type")
+        fields = ("id",
+                  "name",
+                  "model",
+                  "rows",
+                  "seats_in_row",
+                  "airplane_type")
 
 
 class AirplaneRetrieveSerializer(AirplaneSerializer):
@@ -126,7 +134,19 @@ class AirplaneRetrieveSerializer(AirplaneSerializer):
 
     class Meta:
         model = Airplane
-        fields = ("id", "name", "rows", "seats_in_row", "flights")
+        fields = ("id",
+                  "name",
+                  "model",
+                  "rows",
+                  "seats_in_row",
+                  "flights",
+                  "image")
+
+
+class AirplaneImageSerializer(AirplaneSerializer):
+    class Meta:
+        model = Airplane
+        fields = ("id", "model", "image")
 
 
 class FlightSerializer(serializers.ModelSerializer):
@@ -181,6 +201,7 @@ class TicketListSerializer(serializers.ModelSerializer):
             attrs["flight"].airplane.rows,
             serializers.ValidationError("Invalid seat number")
         )
+        return attrs
 
 
 class TicketRetrieveSerializer(TicketListSerializer):
@@ -197,11 +218,12 @@ class OrderListSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         with transaction.atomic():
             tickets_data = validated_data.pop("tickets")
-            order = Order.objects.create(**validated_data)
+            user = self.context["request"].user
+            order = Order.objects.create(user=user, **validated_data)
             for ticket in tickets_data:
                 Ticket.objects.create(order=order, **ticket)
             return order
 
 
 class OrderRetrieveSerializer(OrderListSerializer):
-    tickets = TicketRetrieveSerializer(many=True, read_only=True)
+    tickets = TicketRetrieveSerializer(many=True)
