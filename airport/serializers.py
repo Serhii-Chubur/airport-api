@@ -16,7 +16,7 @@ from airport.models import (
 class AirplaneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Airplane
-        fields = "__all__"
+        fields = ("id", "name", "rows", "seats_in_row", "airplane_type")
 
 
 class AirplaneInfoSerializer(serializers.ModelSerializer):
@@ -180,7 +180,9 @@ class AirplaneRetrieveSerializer(AirplaneListSerializer):
         )
 
 
-class AirplaneImageSerializer(AirplaneListSerializer):
+class AirplaneImageSerializer(serializers.ModelSerializer):
+    model = serializers.StringRelatedField(source="__str__")
+
     class Meta:
         model = Airplane
         fields = ("id", "model", "image")
