@@ -1,14 +1,30 @@
 from django.db import transaction
 from rest_framework import serializers
 
-from airport.models import (AirplaneType,
-                            Order,
-                            Crew,
-                            Airport,
-                            Route,
-                            Airplane,
-                            Flight,
-                            Ticket)
+from airport.models import (
+    AirplaneType,
+    Order,
+    Crew,
+    Airport,
+    Route,
+    Airplane,
+    Flight,
+    Ticket,
+)
+
+
+class AirplaneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Airplane
+        fields = "__all__"
+
+
+class AirplaneInfoSerializer(serializers.ModelSerializer):
+    model = serializers.CharField(source="name", read_only=True)
+
+    class Meta:
+        model = Airplane
+        fields = ("model",)
 
 
 class AirplaneTypeSerializer(serializers.ModelSerializer):
@@ -18,9 +34,7 @@ class AirplaneTypeSerializer(serializers.ModelSerializer):
 
 
 class AirplaneTypeRetrieveSerializer(AirplaneTypeSerializer):
-    airplanes = serializers.SlugRelatedField(
-        slug_field="name", read_only=True, many=True
-    )
+    airplanes = AirplaneInfoSerializer(many=True, read_only=True)
 
 
 class CrewListSerializer(serializers.ModelSerializer):
@@ -49,7 +63,12 @@ class CrewRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Crew
-        fields = "id", "first_name", "last_name", "flights",
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "flights",
+        )
 
 
 class AirportSerializer(serializers.ModelSerializer):
@@ -59,6 +78,12 @@ class AirportSerializer(serializers.ModelSerializer):
 
 
 class RouteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Route
+        fields = "__all__"
+
+
+class RouteListSerializer(serializers.ModelSerializer):
     source = serializers.ChoiceField(
         choices=Airport.objects.values_list("name", flat=True)
     )
@@ -85,34 +110,42 @@ class RouteSerializer(serializers.ModelSerializer):
             "destination", instance.destination.name
         )
 
-        source = Airport.objects.get(
-            name=source_name
-        )
-        destination = Airport.objects.get(
-            name=destination_name
-        )
+        source = Airport.objects.get(name=source_name)
+        destination = Airport.objects.get(name=destination_name)
 
         instance.source = source
         instance.destination = destination
 
-        instance.distance = validated_data.get(
-            "distance", instance.distance
-        )
+        instance.distance = validated_data.get("distance", instance.distance)
         instance.save()
         return instance
+
+
+class FlightSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Flight
+        fields = "__all__"
+
+
+class FlightInfoSerializer(serializers.ModelSerializer):
+    info = serializers.CharField(source="__str__")
+
+    class Meta:
+        model = Flight
+        fields = ("info",)
 
 
 class RouteRetrieveSerializer(serializers.ModelSerializer):
     source = AirportSerializer()
     destination = AirportSerializer()
-    flights = serializers.StringRelatedField(many=True)
+    flights = FlightInfoSerializer(many=True)
 
     class Meta:
         model = Route
         fields = "__all__"
 
 
-class AirplaneSerializer(serializers.ModelSerializer):
+class AirplaneListSerializer(serializers.ModelSerializer):
     model = serializers.StringRelatedField(source="__str__")
     airplane_type = serializers.ChoiceField(
         choices=AirplaneType.objects.all(), write_only=True
@@ -121,54 +154,52 @@ class AirplaneSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Airplane
-        fields = ("id",
-                  "name",
-                  "model",
-                  "rows",
-                  "seats_in_row",
-                  "airplane_type")
+        fields = (
+            "id",
+            "name",
+            "model",
+            "rows",
+            "seats_in_row",
+            "airplane_type",
+        )
 
 
-class AirplaneRetrieveSerializer(AirplaneSerializer):
+class AirplaneRetrieveSerializer(AirplaneListSerializer):
     flights = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Airplane
-        fields = ("id",
-                  "name",
-                  "model",
-                  "rows",
-                  "seats_in_row",
-                  "flights",
-                  "image")
+        fields = (
+            "id",
+            "name",
+            "model",
+            "rows",
+            "seats_in_row",
+            "flights",
+            "image",
+        )
 
 
-class AirplaneImageSerializer(AirplaneSerializer):
+class AirplaneImageSerializer(AirplaneListSerializer):
     class Meta:
         model = Airplane
         fields = ("id", "model", "image")
 
 
-class FlightSerializer(serializers.ModelSerializer):
-    air_lane = serializers.CharField(
-        source="route.__str__", read_only=True
-    )
+class FlightListSerializer(serializers.ModelSerializer):
+    air_lane = serializers.CharField(source="route.__str__", read_only=True)
     route = serializers.ChoiceField(
-        choices=Route.objects.all().select_related(
-            "source", "destination"
-        ),
-        write_only=True
+        choices=Route.objects.all().select_related("source", "destination"),
+        write_only=True,
     )
     crew = serializers.MultipleChoiceField(
         choices=Crew.objects.all().prefetch_related("flights"), write_only=True
     )
     airplane = serializers.ChoiceField(
-        choices=Airplane.objects.all().select_related(
-            "airplane_type"
-        ).prefetch_related(
-            "flights__crew__flights"
-        ),
-        write_only=True
+        choices=Airplane.objects.all()
+        .select_related("airplane_type")
+        .prefetch_related("flights__crew__flights"),
+        write_only=True,
     )
     departure_time = serializers.DateTimeField(write_only=True)
     arrival_time = serializers.DateTimeField(write_only=True)
@@ -199,7 +230,7 @@ class TicketListSerializer(serializers.ModelSerializer):
             attrs["row"],
             attrs["flight"].airplane.seats_in_row,
             attrs["flight"].airplane.rows,
-            serializers.ValidationError("Invalid seat number")
+            serializers.ValidationError("Invalid seat number"),
         )
         return attrs
 

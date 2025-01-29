@@ -14,7 +14,7 @@ class Order(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="orders"
+        related_name="orders",
     )
 
     def __str__(self):
@@ -59,9 +59,8 @@ class Route(models.Model):
 
 def image_upload(instance: "Airplane", filename: str) -> pathlib.Path:
     filename = (
-            f"{slugify(instance.__str__())}"
-            f"_{uuid.uuid4()}"
-            + pathlib.Path(filename).suffix
+        f"{slugify(instance.__str__())}"
+        f"_{uuid.uuid4()}" + pathlib.Path(filename).suffix
     )
     return pathlib.Path("upload/airplanes") / pathlib.Path(filename)
 
@@ -86,16 +85,16 @@ class Flight(models.Model):
     airplane = models.ForeignKey(
         Airplane, on_delete=models.CASCADE, related_name="flights"
     )
-    crew = models.ManyToManyField(
-        Crew, related_name="flights"
-    )
+    crew = models.ManyToManyField(Crew, related_name="flights")
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
 
     def __str__(self):
-        return (f"{self.route}, "
-                f"departure: {self.departure_time}, "
-                f"arrival: {self.arrival_time}")
+        return (
+            f"{self.route}, "
+            f"departure: {self.departure_time}, "
+            f"arrival: {self.arrival_time}"
+        )
 
 
 class Ticket(models.Model):
@@ -113,7 +112,7 @@ class Ticket(models.Model):
 
     @staticmethod
     def validate_ticket(
-            seat: int, row: int, num_seats: int, num_rows: int, error
+        seat: int, row: int, num_seats: int, num_rows: int, error
     ):
         if not 1 <= seat <= num_seats or not 1 <= row <= num_rows:
             raise error
@@ -124,7 +123,7 @@ class Ticket(models.Model):
             self.row,
             self.flight.airplane.seats_in_row,
             self.flight.airplane.rows,
-            ValidationError("Invalid seat number")
+            ValidationError("Invalid seat number"),
         )
 
     def __str__(self):
