@@ -114,7 +114,7 @@ class AirplaneTypeViewSet(
     mixins.ListModelMixin,
     GenericViewSet,
 ):
-    queryset = AirplaneType.objects.all().order_by("-name")
+    queryset = AirplaneType.objects.all().order_by("name")
     pagination_class = ViewsSetPagination
 
     @extend_schema(responses=AirplaneTypeSerializer)
@@ -354,7 +354,7 @@ class AirplaneViewSet(viewsets.ModelViewSet):
         if self.action == "upload_image":
             return AirplaneImageSerializer
 
-        if self.action == "list":
+        if self.action in ("create", "update", "list", "partial_update"):
             return AirplaneListSerializer
 
         return AirplaneSerializer
@@ -436,7 +436,7 @@ class FlightViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return FlightRetrieveSerializer
 
-        if self.action == "list":
+        if self.action in ("create", "update", "list", "partial_update"):
             return FlightListSerializer
         return FlightSerializer
 

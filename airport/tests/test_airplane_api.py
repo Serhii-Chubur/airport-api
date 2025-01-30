@@ -121,9 +121,10 @@ class AdminUserAirplaneApiTests(TestCase):
             "name": "TestName",
             "rows": 10,
             "seats_in_row": 4,
-            "airplane_type": airplane_type.id,
+            "airplane_type": airplane_type.name,
         }
         res = self.client.post(AIRPLANE_URL, payload)
+
         airplanes = Airplane.objects.all()
         airplane = Airplane.objects.get(id=res.data["id"])
 
@@ -132,7 +133,7 @@ class AdminUserAirplaneApiTests(TestCase):
         self.assertEqual(airplane.name, payload["name"])
         self.assertEqual(airplane.rows, payload["rows"])
         self.assertEqual(airplane.seats_in_row, payload["seats_in_row"])
-        self.assertEqual(airplane.airplane_type.id, payload["airplane_type"])
+        self.assertEqual(airplane.airplane_type.name, payload["airplane_type"])
 
     def test_delete_airplane(self):
         airplane = sample_airplane()
@@ -189,7 +190,7 @@ class AirplaneImageUploadTests(TestCase):
                     "name": "Name",
                     "rows": 10,
                     "seats_in_row": 4,
-                    "airplane_type": airplane_type.id,
+                    "airplane_type": airplane_type,
                     "image": ntf,
                 },
                 format="multipart",

@@ -154,9 +154,9 @@ class AdminUserFlightApiTests(TestCase):
         departure_time = "2024-01-01T00:00:00+00:00"
         arrival_time = "2024-01-01T00:00:00+00:00"
         payload = {
-            "route": route.id,
-            "airplane": airplane.id,
-            "crew": [sample_crew().id],
+            "route": route,
+            "airplane": airplane,
+            "crew": [sample_crew()],
             "departure_time": departure_time,
             "arrival_time": arrival_time,
         }
@@ -166,8 +166,8 @@ class AdminUserFlightApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(flights.count(), 1)
-        self.assertEqual(flight.route.id, payload["route"])
-        self.assertEqual(flight.airplane.id, payload["airplane"])
+        self.assertEqual(flight.route, payload["route"])
+        self.assertEqual(flight.airplane, payload["airplane"])
         self.assertEqual(
             flight.departure_time.isoformat(), payload["departure_time"]
         )

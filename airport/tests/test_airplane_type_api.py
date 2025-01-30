@@ -44,7 +44,7 @@ class AuthorizedAirplaneTypeApiTests(TestCase):
         sample_airplane_type()
         sample_airplane_type(name="Test1")
 
-        types = AirplaneType.objects.all()
+        types = AirplaneType.objects.all().order_by("name")
 
         serializer = AirplaneTypeSerializer(types, many=True)
 

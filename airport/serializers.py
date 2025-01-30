@@ -13,12 +13,6 @@ from airport.models import (
 )
 
 
-class AirplaneSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Airplane
-        fields = ("id", "name", "rows", "seats_in_row", "airplane_type")
-
-
 class AirplaneInfoSerializer(serializers.ModelSerializer):
     model = serializers.CharField(source="name", read_only=True)
 
@@ -35,6 +29,14 @@ class AirplaneTypeSerializer(serializers.ModelSerializer):
 
 class AirplaneTypeRetrieveSerializer(AirplaneTypeSerializer):
     airplanes = AirplaneInfoSerializer(many=True, read_only=True)
+
+
+class AirplaneSerializer(serializers.ModelSerializer):
+    airplane_type = AirplaneTypeSerializer(read_only=True)
+
+    class Meta:
+        model = Airplane
+        fields = ("id", "name", "rows", "seats_in_row", "airplane_type")
 
 
 class CrewListSerializer(serializers.ModelSerializer):
@@ -122,6 +124,10 @@ class RouteListSerializer(serializers.ModelSerializer):
 
 
 class FlightSerializer(serializers.ModelSerializer):
+    route = RouteListSerializer()
+    airplane = AirplaneSerializer()
+    crew = CrewListSerializer(many=True)
+
     class Meta:
         model = Flight
         fields = "__all__"
@@ -203,8 +209,9 @@ class FlightListSerializer(serializers.ModelSerializer):
         .prefetch_related("flights__crew__flights"),
         write_only=True,
     )
-    departure_time = serializers.DateTimeField(write_only=True)
-    arrival_time = serializers.DateTimeField(write_only=True)
+    departure_time = serializers.DateTimeField()
+    arrival_time = serializers.DateTimeField()
+    available_places = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Flight
@@ -215,6 +222,7 @@ class FlightRetrieveSerializer(serializers.ModelSerializer):
     route = serializers.CharField(source="route.__str__")
     airplane = serializers.CharField(source="airplane.__str__")
     crew = serializers.StringRelatedField(many=True)
+    available_places = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Flight
@@ -222,6 +230,8 @@ class FlightRetrieveSerializer(serializers.ModelSerializer):
 
 
 class TicketListSerializer(serializers.ModelSerializer):
+    flight = serializers.CharField()
+
     class Meta:
         model = Ticket
         fields = "id", "row", "seat", "flight"
@@ -238,7 +248,7 @@ class TicketListSerializer(serializers.ModelSerializer):
 
 
 class TicketRetrieveSerializer(TicketListSerializer):
-    flight = serializers.StringRelatedField(source="flight.__str__")
+    flight = FlightSerializer()
 
 
 class OrderListSerializer(serializers.ModelSerializer):

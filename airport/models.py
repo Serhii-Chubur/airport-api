@@ -96,6 +96,13 @@ class Flight(models.Model):
             f"arrival: {self.arrival_time}"
         )
 
+    @property
+    def available_places(self):
+        return (
+            self.airplane.seats_in_row * self.airplane.rows
+            - self.tickets.count()
+        )
+
 
 class Ticket(models.Model):
     row = models.IntegerField()
