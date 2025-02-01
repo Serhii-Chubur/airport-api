@@ -32,4 +32,4 @@ Install PostgreSQL & create db
 - Creating: airplane types, airplanes, routes, airports, flights & crew
 - Filtering: routes, flights & airplanes
 ### DB structure
-![airport_diagram.png](airport_diagram.png)
+![airport_diagram.png](./airport_diagram.jpg)
