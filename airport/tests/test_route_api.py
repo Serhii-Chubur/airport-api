@@ -144,8 +144,8 @@ class AdminUserRouteApiTests(TestCase):
             name="TestDestination", closest_big_city="TestDestinationCity"
         )
         payload = {
-            "source": source.name,
-            "destination": destination.name,
+            "source": source.id,
+            "destination": destination.id,
             "distance": 100,
         }
         res = self.client.post(ROUTE_URL, payload)
@@ -154,8 +154,8 @@ class AdminUserRouteApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(routes.count(), 1)
-        self.assertEqual(route.source.name, payload["source"])
-        self.assertEqual(route.destination.name, payload["destination"])
+        self.assertEqual(route.source.id, payload["source"])
+        self.assertEqual(route.destination.id, payload["destination"])
         self.assertEqual(route.distance, payload["distance"])
 
     def test_delete_route(self):

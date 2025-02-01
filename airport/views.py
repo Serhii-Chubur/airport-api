@@ -127,7 +127,7 @@ class AirplaneTypeViewSet(
         """Create an airplane type."""
         return super().create(request, *args, **kwargs)
 
-    @extend_schema(responses=AirplaneTypeRetrieveSerializer)
+    @extend_schema(responses=AirplaneTypeSerializer)
     def retrieve(self, request, *args, **kwargs):
         """Get airplane type by id."""
         return super().retrieve(request, *args, **kwargs)
@@ -207,32 +207,32 @@ class AirportViewSet(viewsets.ModelViewSet):
     queryset = Airport.objects.all().order_by("name")
     pagination_class = ViewsSetPagination
 
-    @extend_schema()
+    @extend_schema(responses=AirportSerializer)
     def list(self, request, *args, **kwargs):
         """Get all airports."""
         return super().list(request, *args, **kwargs)
 
-    @extend_schema()
+    @extend_schema(responses=AirportSerializer)
     def retrieve(self, request, *args, **kwargs):
         """Get airport by id."""
         return super().retrieve(request, *args, **kwargs)
 
-    @extend_schema(methods=["POST"])
+    @extend_schema(methods=["POST"], responses=AirportSerializer)
     def create(self, request, *args, **kwargs):
         """Create an airport."""
         return super().create(request, *args, **kwargs)
 
-    @extend_schema(methods=["PUT"])
+    @extend_schema(methods=["PUT"], responses=AirportSerializer)
     def update(self, request, *args, **kwargs):
         """Update airport with provided id."""
         return super().update(request, *args, **kwargs)
 
-    @extend_schema(methods=["PATCH"])
+    @extend_schema(methods=["PATCH"], responses=AirportSerializer)
     def partial_update(self, request, *args, **kwargs):
         """Update airport with provided id."""
         return super().partial_update(request, *args, **kwargs)
 
-    @extend_schema(methods=["DELETE"])
+    @extend_schema(methods=["DELETE"], responses=AirportSerializer)
     def destroy(self, request, *args, **kwargs):
         """Delete airport with provided id."""
         return super().destroy(request, *args, **kwargs)
@@ -288,7 +288,10 @@ class RouteViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return RouteRetrieveSerializer
 
-        return RouteListSerializer
+        if self.action in ("create", "update", "list", "partial_update"):
+            return RouteListSerializer
+
+        return RouteSerializer
 
     def get_queryset(self):
         source = self.request.GET.get("source")
@@ -436,8 +439,9 @@ class FlightViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return FlightRetrieveSerializer
 
-        if self.action in ("create", "update", "list", "partial_update"):
+        if self.action == "list":
             return FlightListSerializer
+
         return FlightSerializer
 
     def get_queryset(self):

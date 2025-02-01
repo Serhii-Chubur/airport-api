@@ -22,9 +22,12 @@ pathspec==0.12.1
 pillow==11.1.0
 platformdirs==4.3.6
 propcache==0.2.1
+psycopg==3.1.12
+psycopg2-binary==2.9.10
 pycodestyle==2.12.1
 pyflakes==3.2.0
 PyJWT==2.10.1
+python-dotenv==1.0.1
 PyYAML==6.0.2
 referencing==0.36.2
 rpds-py==0.22.3
